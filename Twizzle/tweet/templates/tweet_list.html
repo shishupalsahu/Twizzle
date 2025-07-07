@@ -1,14 +1,138 @@
 {% extends "layout.html" %}  
 {% load static %}
 {% block title %}
-chai aur tweet
+Tweetbar
 {% endblock  %}
 
 {% block content  %}
-<h1 class="text-center mt-4" >Welcome to Tweet Project</h1>
+<style> 
+   .fancy-heading {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 2.8rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    color: white;
+    border-radius: 15px;
+    border: 3px solid #007bff;
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4),
+                0 4px 10px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    animation: popIn 1s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-<a  class="btn btn-primary mb-4" href=" {% url "tweet_create"%}
-">Create a Tweet</a>
+  .fancy-heading:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.6),
+                0 6px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .btn-create-tweet {
+    display: inline-block;
+    background: linear-gradient(135deg, #4e9af1, #8f94fb);
+    color: white;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 17px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-create-tweet:hover {
+    background: linear-gradient(135deg, #357ae8, #6f7efc);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+  }
+
+  .btn-create-tweet:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  } 
+  {% comment %} from here for card body {% endcomment %}
+   .tweet-card-body {
+    padding: 20px;
+    background: linear-gradient(to right, #ffffff, #f2f9ff);
+    border-radius: 0 0 15px 15px;
+    box-shadow: inset 0 -1px 0 #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .tweet-card-body:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.2);
+  }
+
+  .tweet-username {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #1a237e;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+  }
+
+  .tweet-text {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .tweet-actions a {
+    margin-right: 10px;
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+  }
+
+  .tweet-actions .btn-primary {
+    background-color: #4e9af1;
+    border: none;
+  }
+
+  .tweet-actions .btn-primary:hover {
+    background-color: #357ae8;
+  }
+
+  .tweet-actions .btn-danger {
+    background-color: #ff4d4d;
+    border: none;
+  }
+
+  .tweet-actions .btn-danger:hover {
+    background-color: #e60000;
+  }
+</style>
+<!-- Centered Heading Fix -->
+<div class="d-flex justify-content-center mt-4">
+  <h1 class="fancy-heading"> Express Freely with TweetBar </h1>
+</div>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-start">
+    <a href="{% url 'tweet_create' %}" class="btn btn-create-tweet mb-3">📝 Create a Tweet</a>
+  </div>
+</div>
+
 <div class="container row gap-3">
   {% for tweet in tweets  %}
      <div class="card" style="width: 18rem;">
@@ -20,17 +144,18 @@ chai aur tweet
 {% endif %}   
 
 
-  <div class="card-body">
-    <h5 class="card-title">{{tweet.user.username}}</h5>
-    <p class="card-text">{{tweet.text}}</p>  
-    
-    {% if tweet.user == user %}
+  
+<div class="tweet-card-body">
+  <h5 class="tweet-username">{{ tweet.user.username }}</h5>
+  <p class="tweet-text">{{ tweet.text }}</p>
 
-    <a href="{% url 'tweet.edit' tweet.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'tweet.delete' tweet.id %}" class="btn btn-danger">Delete</a>  
-
-     {% endif %}
+  {% if tweet.user == user %}
+  <div class="tweet-actions">
+    <a href="{% url 'tweet.edit' tweet.id %}" class="btn btn-primary">✏️ Edit</a>
+    <a href="{% url 'tweet.delete' tweet.id %}" class="btn btn-danger">🗑️ Delete</a>
   </div>
+  {% endif %}
+</div>
 </div>
   {% endfor %}
 </div>
