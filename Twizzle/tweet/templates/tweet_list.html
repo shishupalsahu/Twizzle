@@ -5,7 +5,7 @@ chai aur tweet
 {% endblock  %}
 
 {% block content  %}
-<h1 class="text-center mt-4" >Welcome to chai's Django Project</h1>
+<h1 class="text-center mt-4" >Welcome to Tweet Project</h1>
 
 <a  class="btn btn-primary mb-4" href=" {% url "tweet_create"%}
 ">Create a Tweet</a>
@@ -22,9 +22,14 @@ chai aur tweet
 
   <div class="card-body">
     <h5 class="card-title">{{tweet.user.username}}</h5>
-    <p class="card-text">{{tweet.text}}</p>
+    <p class="card-text">{{tweet.text}}</p>  
+    
+    {% if tweet.user == user %}
+
     <a href="{% url 'tweet.edit' tweet.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'tweet.delete' tweet.id %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'tweet.delete' tweet.id %}" class="btn btn-danger">Delete</a>  
+
+     {% endif %}
   </div>
 </div>
   {% endfor %}

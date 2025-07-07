@@ -1,20 +1,72 @@
-
 {% extends "layout.html" %}
 {% block title %}
-chai aur tweet
-{% endblock  %}
+  Chai aur Tweet
+{% endblock %}
 
-{% block content  %}
-<h1 class="text-center mt-4" >Welcome to chai's Django Project</h1>
-  <h2>{%if form.instance.pk%} Edit tweet {%else %} Create tweet 
-    {%endif%}
-    <form method="post" enctype="multipart/form-data" class="form"> 
-        {% csrf_token %}
-        {{form.as_p}}
-        <button class="btn btn-warning" type="submit">
-          Submit
-        </button>
-        <a href="{% url 'tweet_list' %}">Back to Tweet List</a>
+{% block content %}
+<style>
+  .tweet-form-card {
+    background: linear-gradient(135deg,rgb(157, 185, 196), #e2d1c3);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .tweet-form-card h2 {
+    font-weight: bold;
+    font-size: 28px;
+    color: #2b2b2b;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .tweet-form-card input,
+  .tweet-form-card textarea,
+  .tweet-form-card select {
+    border-radius: 10px;
+    background-color: #fff9f2;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+
+  .tweet-form-card button,
+  .tweet-form-card a.btn {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 12px;
+  }
+
+  .tweet-form-card .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+
+  .tweet-form-card .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+  }
+</style>
+
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="tweet-form-card col-md-8">
+    
+    <h2>
+      {% if form.instance.pk %} ✏️ Edit Tweet {% else %} ✨ Create a New Tweet {% endif %}
+    </h2>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-success">🚀 Submit</button>
+        <a href="{% url 'tweet_list' %}" class="btn btn-secondary">⬅️ Back</a>
+      </div>
     </form>
-</h2>
+
+  </div>
+</div>
 {% endblock %}
