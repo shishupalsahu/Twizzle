@@ -1,0 +1,32 @@
+{% extends "layout.html" %}  
+{% load static %}
+{% block title %}
+chai aur tweet
+{% endblock  %}
+
+{% block content  %}
+<h1 class="text-center mt-4" >Welcome to chai's Django Project</h1>
+
+<a  class="btn btn-primary mb-4" href=" {% url "tweet_create"%}
+">Create a Tweet</a>
+<div class="container row gap-3">
+  {% for tweet in tweets  %}
+     <div class="card" style="width: 18rem;">
+  {% comment %} <img src="{{tweet.photo.url}}" class="card-img-top" alt="..."> {% endcomment %}
+ {% if tweet.photo %}
+  <img src="{{ tweet.photo.url }}" alt="Tweet image">
+{% else %}
+  <img src="{% static 'images/default.png' %}" alt="Default image">
+{% endif %}   
+
+
+  <div class="card-body">
+    <h5 class="card-title">{{tweet.user.username}}</h5>
+    <p class="card-text">{{tweet.text}}</p>
+    <a href="{% url 'tweet.edit' tweet.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'tweet.delete' tweet.id %}" class="btn btn-danger">Delete</a>
+  </div>
+</div>
+  {% endfor %}
+</div>
+{% endblock %}
